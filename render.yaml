@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: qwen-chatbot
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      # Free tier can't fit local weights — use the API backend here.
+      - key: CHAT_BACKEND
+        value: api
+      - key: MODEL_NAME
+        value: qwen-plus
+      # Set these two in the Render dashboard (marked sync:false = not stored in git).
+      - key: OPENAI_BASE_URL
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
